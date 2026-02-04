@@ -17,7 +17,7 @@ public class DbConfig {
         Properties props = new Properties();
 
         try (InputStream is = getClass().getResourceAsStream("/db.properties")) {
-            if (is != null) {
+            if (is == null) {
                 throw new DataAccessException("Could not find db.properties in resources");
             }
             props.load(is);
