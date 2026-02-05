@@ -30,9 +30,9 @@
       <Label fx:id="emailText" />
       <HBox prefHeight="90.0" prefWidth="790.0" spacing="20.0">
          <children>
-            <Button fx:id="addFavorite" mnemonicParsing="false" onAction="#onAddFavorite" text="Tilføj Til Favoritter" />
-            <Button fx:id="removeFavorite" mnemonicParsing="false" onAction="#onRemoveFavorite" text="Fjern Fra Favoritter" />
-            <Button fx:id="logOut" mnemonicParsing="false" onAction="#onLogOut" text="Log Ud" />
+            <Button fx:id="addFavorite" mnemonicParsing="false" onAction="#handleAddFavorite" text="Tilføj Til Favoritter" />
+            <Button fx:id="removeFavorite" mnemonicParsing="false" onAction="#handleRemoveFavorite" text="Fjern Fra Favoritter" />
+            <Button fx:id="logOut" mnemonicParsing="false" onAction="#handleLogOut" text="Log Ud" />
          </children>
          <padding>
             <Insets left="20.0" right="20.0" top="20.0" />
