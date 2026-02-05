@@ -24,47 +24,35 @@ public class StreamingServiceController {
     private MovieService movieService;
     private FavoriteService favoriteService;
 
-    // Tableviews and columns for movies and favorites
+    // --- DATA KOLONNER ---
+    @FXML private TableView<Favorite> favoriteTableView;
+    @FXML private TableColumn<Favorite, String> favoriteTitleColumn;
+    @FXML private TableColumn<Favorite, Double> favoriteRatingColumn;
+    @FXML private TableColumn<Favorite, String> favoriteGenreColumn;
 
-    @FXML
-    private TableView<Favorite> favoriteTableView;
-    @FXML
-    private TableColumn<Favorite, String> favoriteTitleColumn;
-    @FXML
-    private TableColumn<Favorite, Double> favoriteRatingColumn;
-    @FXML
-    private TableColumn<Favorite, String> favoriteGenreColumn;
+    @FXML private TableView<Movie> movieTableView;
+    @FXML private TableColumn<Movie, String> movieTitleColumn;
+    @FXML private TableColumn<Movie, Double> movieRatingColumn;
+    @FXML private TableColumn<Movie, String> movieGenreColumn;
 
-    @FXML
-    private TableView<Movie> movieTableView;
-    @FXML
-    private TableColumn<Movie, String> movieTitleColumn;
-    @FXML
-    private TableColumn<Movie, Double> movieRatingColumn;
-    @FXML
-    private TableColumn<Movie, String> movieGenreColumn;
+    @FXML private Label nameText;
+    @FXML private Label emailText;
 
-    @FXML
-    private Label nameText;
-    @FXML
-    private Label emailText;
+    @FXML private Button addFavorite;
+    @FXML private Button removeFavorite;
+    @FXML private Button logOut;
 
-    @FXML
-    private Button addFavorite;
-    @FXML
-    private Button removeFavorite;
-    @FXML
-    private Button logOut;
 
-    @FXML
     public void initializeData(User user, MovieService movieService, FavoriteService favoriteService) {
         this.currentUser = user;
         this.movieService = movieService;
         this.favoriteService = favoriteService;
 
-        nameText.setText("Bruger: " + user.getName());
-        emailText.setText("Email: " + user.getEmail());
-
+        // Vis info
+        if(user != null) {
+            nameText.setText(user.getName());
+            emailText.setText(user.getEmail());
+        }
 
         setupMovieTable();
         setupFavoriteTable();
@@ -75,12 +63,12 @@ public class StreamingServiceController {
 
 
     @FXML
-    private void handleAddFavorite(ActionEvent event) {
+    private void onAddFavorite() {
         Movie selectedMovie = movieTableView.getSelectionModel().getSelectedItem();
-        if (selectedMovie != null) {
+        if (selectedMovie != null && currentUser != null) {
             try {
                 favoriteService.addToFavorites(currentUser.getId(), selectedMovie.getId());
-                loadFavorites(); // Opdater listen med det samme
+                loadFavorites(); // Opdater listen
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -88,12 +76,12 @@ public class StreamingServiceController {
     }
 
     @FXML
-    private void handleRemoveFavorite(ActionEvent event) {
+    private void onRemoveFavorite() {
         Favorite selectedFavorite = favoriteTableView.getSelectionModel().getSelectedItem();
-        if (selectedFavorite != null) {
+        if (selectedFavorite != null && currentUser != null) {
             try {
                 favoriteService.removeFromFavorites(currentUser.getId(), selectedFavorite.getMovieId());
-                loadFavorites();
+                loadFavorites(); // Opdater listen
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -101,7 +89,7 @@ public class StreamingServiceController {
     }
 
     @FXML
-    private void handleLogOut(ActionEvent event) {
+    private void onLogOut(ActionEvent event) { // MANGLER i din gamle kode
         try {
             SceneSwitch.switchScene(event, "/login-view.fxml");
         } catch (IOException e) {
@@ -109,35 +97,31 @@ public class StreamingServiceController {
         }
     }
 
+
     private void loadMovies() {
-        try {
+        if (movieService != null) {
             List<Movie> movies = movieService.getAllMovies();
             movieTableView.setItems(FXCollections.observableArrayList(movies));
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    private void loadFavorites () {
-        try {
-            List<Favorite> fav = favoriteService.getFavoritesByUserId(currentUser.getId());
-            ObservableList<Favorite> favList = FXCollections.observableArrayList(fav);
-            favoriteTableView.setItems(favList);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void loadFavorites() {
+        if (favoriteService != null && currentUser != null) {
+            List<Favorite> favs = favoriteService.getFavoritesByUserId(currentUser.getId());
+            favoriteTableView.setItems(FXCollections.observableArrayList(favs));
         }
     }
 
-    private void setupMovieTable () {
+    private void setupMovieTable() {
+
         movieGenreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         movieRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        movieTitleColumn.setCellValueFactory(new PropertyValueFactory<>("ritle"));
+        movieTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     }
 
-    private void setupFavoriteTable () {
+    private void setupFavoriteTable() {
         favoriteGenreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         favoriteRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         favoriteTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     }
-
 }

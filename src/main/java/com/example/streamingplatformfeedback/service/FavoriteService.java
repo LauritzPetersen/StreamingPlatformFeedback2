@@ -12,22 +12,19 @@ public class FavoriteService {
         this.favoriteRepo = repo;
     }
 
-    public List<Favorite> getAllFavorites() {
-        return favoriteRepo.findAll();
-    }
 
     public List<Favorite> getFavoritesByUserId(Integer userId) {
-        return favoriteRepo.findByUserId(userId);
+        return favoriteRepo.findAllByUserId(userId);
     }
 
-    public List<Favorite> addToFavorites(int userId, int movieId){
-        return favoriteRepo.addToFavorites(userId, movieId);
+    public void addToFavorites(int userId, int movieId) {
+        favoriteRepo.addToFavorites(userId, movieId);
     }
 
-    public List<Favorite> removeFromFavorites(int userId, int movieId){
-        return favoriteRepo.removeFromFavorites(userId, movieId);
+    public void removeFromFavorites(int userId, int movieId) {
+        favoriteRepo.removeFromFavorites(userId, movieId);
     }
-
-
-
 }
+
+
+
