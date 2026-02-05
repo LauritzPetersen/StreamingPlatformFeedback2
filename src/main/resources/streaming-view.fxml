@@ -4,42 +4,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="282.0" prefWidth="811.0" spacing="20.0">
-         <children>
-            <TableView fx:id="favoriteTableView" prefHeight="282.0" prefWidth="379.0">
-              <columns>
-                <TableColumn fx:id="favoriteTitleColumn" prefWidth="175.0" text="Title" />
-                <TableColumn fx:id="favoriteRatingColumn" prefWidth="73.0" text="Rating" />
-                 <TableColumn fx:id="favoriteGenreColumn" prefWidth="130.0" text="genre" />
-              </columns>
-            </TableView>
-             <TableView fx:id="movieTableView" prefHeight="282.0" prefWidth="379.0">
-                 <columns>
-                     <TableColumn fx:id="movieTitleColumn" prefWidth="175.0" text="Title" />
-                     <TableColumn fx:id="movieRatingColumn" prefWidth="73.0" text="Rating" />
-                     <TableColumn fx:id="movieGenreColumn" prefWidth="130.0" text="genre" />
-                 </columns>
-             </TableView>
-         </children>
-         <padding>
-            <Insets right="20.0" />
-         </padding></HBox>
-      <Label fx:id="nameText" />
-      <Label fx:id="emailText" />
-      <HBox prefHeight="90.0" prefWidth="790.0" spacing="20.0">
-         <children>
-            <Button fx:id="addFavorite" mnemonicParsing="false" onAction="#handleAddFavorite" text="Tilføj Til Favoritter" />
-            <Button fx:id="removeFavorite" mnemonicParsing="false" onAction="#handleRemoveFavorite" text="Fjern Fra Favoritter" />
-            <Button fx:id="logOut" mnemonicParsing="false" onAction="#handleLogOut" text="Log Ud" />
-         </children>
-         <padding>
-            <Insets left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </HBox>
-   </children>
-   <padding>
-      <Insets left="20.0" />
-   </padding>
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.streamingplatformfeedback.ui.StreamingServiceController">
+    <children>
+        <HBox prefHeight="282.0" prefWidth="811.0" spacing="20.0">
+            <children>
+                <TableView fx:id="favoriteTableView" prefHeight="282.0" prefWidth="379.0">
+                    <columns>
+                        <TableColumn fx:id="favoriteTitleColumn" prefWidth="175.0" text="Title" />
+                        <TableColumn fx:id="favoriteRatingColumn" prefWidth="73.0" text="Rating" />
+                        <TableColumn fx:id="favoriteGenreColumn" prefWidth="130.0" text="genre" />
+                    </columns>
+                </TableView>
+                <TableView fx:id="movieTableView" prefHeight="282.0" prefWidth="379.0">
+                    <columns>
+                        <TableColumn fx:id="movieTitleColumn" prefWidth="175.0" text="Title" />
+                        <TableColumn fx:id="movieRatingColumn" prefWidth="73.0" text="Rating" />
+                        <TableColumn fx:id="movieGenreColumn" prefWidth="130.0" text="genre" />
+                    </columns>
+                </TableView>
+            </children>
+            <padding>
+                <Insets right="20.0" />
+            </padding>
+        </HBox>
+
+        <Label fx:id="nameText" />
+        <Label fx:id="emailText" />
+
+        <HBox prefHeight="90.0" prefWidth="790.0" spacing="20.0">
+            <children>
+                <Button fx:id="addFavorite" mnemonicParsing="false" onAction="#onAddFavorite" text="Tilføj Til Favoritter" />
+                <Button fx:id="removeFavorite" mnemonicParsing="false" onAction="#onRemoveFavorite" text="Fjern Fra Favoritter" />
+                <Button fx:id="logOut" mnemonicParsing="false" onAction="#onLogOut" text="Log Ud" />
+            </children>
+            <padding>
+                <Insets left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox>
+    </children>
+    <padding>
+        <Insets left="20.0" />
+    </padding>
 </VBox>
