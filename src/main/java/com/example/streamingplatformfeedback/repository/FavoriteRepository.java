@@ -68,6 +68,26 @@ public class FavoriteRepository {
         }
     }
 
+    public List<Favorite> findByUserId(int userId){
+        String sql = "select id, userid, movieid from favorites where userid = ?";
+        List<Favorite> result = new ArrayList<>();
+        try(Connection c = db.getConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+
+            ps.setInt(1, userId);
+
+            try(ResultSet rs = ps.executeQuery()){
+                while (rs.next()){
+                    result.add(mapRow(rs));
+                }
+            }
+            return result;
+
+        } catch (Exception e){
+            throw new DataAccessException("Fejl ved findByUserId()", e);
+        }
+    }
+
     private Favorite mapRow(ResultSet rs) throws SQLException {
         return new Favorite(
                 rs.getInt("id"),

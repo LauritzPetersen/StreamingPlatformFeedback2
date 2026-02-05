@@ -61,8 +61,8 @@ public class UserRepository {
     private User mapRow(ResultSet rs) throws SQLException {
         return new User(
                 rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("email")
+                rs.getString("email"),
+                rs.getString("name")
         );
     }
 
