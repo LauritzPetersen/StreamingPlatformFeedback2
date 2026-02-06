@@ -1,11 +1,16 @@
 package com.example.streamingplatformfeedback;
 
+import com.example.streamingplatformfeedback.infrastructure.DbConfig;
+import com.example.streamingplatformfeedback.model.User;
+import com.example.streamingplatformfeedback.repository.UserRepository;
+import com.example.streamingplatformfeedback.service.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainApplication extends Application {
 
@@ -20,8 +25,8 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
-    }
+       launch(args);
+   }
 }
 
 

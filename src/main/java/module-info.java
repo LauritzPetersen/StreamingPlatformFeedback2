@@ -7,5 +7,6 @@ module com.example.streamingplatformfeedback {
     opens com.example.streamingplatformfeedback to javafx.fxml;
     exports com.example.streamingplatformfeedback;
     exports com.example.streamingplatformfeedback.ui;
+    exports com.example.streamingplatformfeedback.model;
     opens com.example.streamingplatformfeedback.ui to javafx.fxml;
 }

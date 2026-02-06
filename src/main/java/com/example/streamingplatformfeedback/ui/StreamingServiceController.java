@@ -5,14 +5,12 @@ import com.example.streamingplatformfeedback.model.Movie;
 import com.example.streamingplatformfeedback.model.User;
 import com.example.streamingplatformfeedback.service.FavoriteService;
 import com.example.streamingplatformfeedback.service.MovieService;
+import com.example.streamingplatformfeedback.service.ValidateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -65,11 +63,24 @@ public class StreamingServiceController {
     @FXML
     private void onAddFavorite() {
         Movie selectedMovie = movieTableView.getSelectionModel().getSelectedItem();
+
+        try {
+            for (Favorite fav : favoriteTableView.getItems()) {
+                if (fav.getMovieId() == selectedMovie.getId()) {
+                    showAlert(Alert.AlertType.CONFIRMATION,"Movie already exists in your favorite list");
+                    return;
+                }
+            }
+        } catch (ValidateException e) {
+            e.getMessage();
+        }
+
         if (selectedMovie != null && currentUser != null) {
             try {
                 favoriteService.addToFavorites(currentUser.getId(), selectedMovie.getId());
                 loadFavorites(); // Opdater listen
             } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Movie could not be added to favorites");
                 e.printStackTrace();
             }
         }
@@ -89,9 +100,10 @@ public class StreamingServiceController {
     }
 
     @FXML
-    private void onLogOut(ActionEvent event) { // MANGLER i din gamle kode
+    private void onLogOut(ActionEvent event) {
         try {
             SceneSwitch.switchScene(event, "/login-view.fxml");
+            showAlert(Alert.AlertType.CONFIRMATION, "User logout Success");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,5 +135,11 @@ public class StreamingServiceController {
         favoriteGenreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         favoriteRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         favoriteTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+    }
+
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type, message, ButtonType.OK);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }
